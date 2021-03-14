@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: nginx
   annotations:
-    metallb.universe.tf/allow-shared-ip: 172.17.0.2-172.17.0.2
+    metallb.universe.tf/allow-shared-ip: 172.17.0.3-172.17.0.3
 spec:
   selector:
     app: nginx

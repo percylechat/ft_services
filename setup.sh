@@ -2,6 +2,7 @@
 
 #demarre minikube
 #docker service start
+#sudo chmod 777 /var/run/docker.sock
 minikube start --driver=docker
 eval $(minikube docker-env)
 minikube addons enable dashboard
@@ -24,27 +25,31 @@ kubectl create secret generic -n metallb-system memberlist --from-literal=secret
 kubectl apply -f ./srcs/config.yaml
 
 #montage des images docker
-docker build -t image-nginx ./srcs/nginx/
-docker build -t image-ftps ./srcs/FTPS/
+
 docker build -t image-phpmyadmin ./srcs/php-my-admin/
 docker build -t image-mysql ./srcs/mysql/
 docker build -t image-wordpress ./srcs/Wordpress/
+docker build -t image-influxdb ./srcs/influxdb/
 docker build -t image-grafana ./srcs/grafana/
 #docker build -t image-grafana ./srcs/grafana_claire/
-docker build -t image-influxdb ./srcs/influxdb/
+docker build -t image-nginx ./srcs/nginx/
+#docker build -t image-nginx ./srcs/nginx_claire/
 
+docker build -t image-ftps ./srcs/FTPS/
+#docker build -t image-ftps ./srcs/FTPS_claire/
 
 #application des configs sur les images
 kubectl apply -f ./srcs/php-my-admin/php.yaml
-kubectl apply -f ./srcs/nginx/nginx.yaml
-kubectl apply -f ./srcs/FTPS/ftps.yaml
-
-kubectl apply -f ./srcs/grafana/grafana.yaml
-#kubectl apply -f ./srcs/grafana_claire/grafana.yaml
-
 kubectl apply -f ./srcs/influxdb/influxdb.yaml
 kubectl apply -f ./srcs/mysql/mysql.yaml
 kubectl apply -f ./srcs/Wordpress/wordpress.yaml
+kubectl apply -f ./srcs/grafana/grafana.yaml
+#kubectl apply -f ./srcs/grafana_claire/grafana.yaml
+kubectl apply -f ./srcs/nginx/nginx.yaml
+#kubectl apply -f ./srcs/nginx_claire/nginx.yaml
+
+kubectl apply -f ./srcs/FTPS/ftps.yaml
+#kubectl apply -f ./srcs/FTPS_claire/ftps.yaml
 
 #lancer le dashboard minikube
 minikube dashboard

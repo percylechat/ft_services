@@ -15,12 +15,12 @@ RUN chown root:root /etc/vsftpd/ssl/vsftpd.key && chmod 600 /etc/vsftpd/ssl/vsft
 
 RUN mkdir -p /srv/ftp && mkdir -p /etc/vsftpd/vsftpd_user_conf && mkdir -p var/run/vsftpd
 
-# COPY clde-ber.conf etc/vsftpd/vsftpd_user_conf
+COPY percevallechat.conf etc/vsftpd/vsftpd_user_conf
 COPY vsftpd.conf etc/vsftpd/vsftpd.conf
-COPY start_vsftpd.sh start_vsftpd.sh
 COPY chroot.list /etc/vsftpd/
 COPY vsftpd.user_list /etc/
 RUN touch etc/pam.d/vsftpd
+COPY start_vsftpd.sh start_vsftpd.sh
 
 RUN chmod +x start_vsftpd.sh
 RUN chmod 600 etc/vsftpd.user_list
